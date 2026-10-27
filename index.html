@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desert Furusiyya - Kuis Asmaul Husna PAI Kelas 4</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0f0814;
+            color: #fce8cc;
+            overflow-x: hidden;
+        }
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        /* Custom Desert & Arabesque Styles */
+        .bg-desert-gradient {
+            background: linear-gradient(180deg, #1a0b2e 0%, #3b1536 35%, #7a2c3a 65%, #c86b3b 88%, #df9943 100%);
+        }
+        .bg-night-desert {
+            background: linear-gradient(180deg, #090314 0%, #150a2a 40%, #2a1138 80%, #4a1936 100%);
+        }
+        .gold-border {
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff2a3 0%, #d4af37 50%, #aa7c11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-button {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.4);
+            transition: all 0.3s ease;
+        }
+        .gold-button:hover {
+            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+        .card-arabic {
+            background: rgba(26, 11, 46, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        /* Sand Dune Animation Effect */
+        .dune-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+        }
+        /* Pulse Animation */
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6)); }
+            50% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.9)); }
+        }
+        .pulse-gold {
+            animation: pulse-glow 3s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-night-desert relative">
+
+    <!-- Background Desert Atmosphere -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-30">
+        <div class="absolute top-10 left-10 text-4xl text-yellow-200/20"><i class="fa-solid => fa-star"></i></div>
+        <div class="absolute top-20 right-20 text-2xl text-yellow-200/20"><i class="fa-solid fa-star"></i></div>
+        <div class="absolute top-40 left-1/3 text-3xl text-yellow-200/20"><i class="fa-solid fa-moon"></i></div>
+    </div>
+
+    <!-- Audio Control Floating Bar -->
+    <div class="fixed top-4 right-4 z-50 flex gap-2">
+        <button id="btn-sound" onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-amber-900/80 border border-amber-500 text-amber-300 flex items-center justify-center hover:bg-amber-800 transition">
+            <i id="sound-icon" class="fa-solid fa-volume-high"></i>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="relative z-10 container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center">
+
+        <!-- HEADER BANNER -->
+        <header class="text-center mb-6">
+            <div class="inline-block px-4 py-1 rounded-full bg-amber-950/60 border border-amber-500/40 mb-2">
+                <span class="text-xs uppercase tracking-widest text-amber-300 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> PAI Kelas 4 - Asmaul Husna</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black font-cinzel gold-gradient-text tracking-wide drop-shadow-lg">
+                DESERT FURUSIYYA
+            </h1>
+            <p class="text-amber-200/80 text-sm md:text-base mt-1 italic">
+                Ekspedisi Ksatria Penunggang Kuda Meneladani Asmaul Husna
+            </p>
+        </header>
+
+        <!-- 1. HALAMAN UTAMA / MANIFEST (MODE SELECTION & INPUT NAME) -->
+        <section id="screen-main" class="card-arabic rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
+            <div class="mb-6 flex justify-center">
+                <!-- Icon Horse Knight -->
+                <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-amber-700 to-yellow-500 p-1 pulse-gold flex items-center justify-center">
+                    <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center">
+                        <i class="fa-solid fa-chess-knight text-5xl text-amber-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="text-xl md:text-2xl font-bold font-cinzel text-amber-300 mb-4">Pilih Mode Pertandingan</h2>
+
+            <!-- Mode Switcher -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <button type="button" onclick="selectMode('single')" id="mode-btn-single" class="p-4 rounded-xl border-2 border-amber-500 bg-amber-950/40 hover:bg-amber-900/50 transition flex flex-col items-center">
+                    <i class="fa-solid fa-user-shield text-3xl text-amber-400 mb-2"></i>
+                    <span class="font-bold text-amber-100">Tanding Tunggal</span>
+                    <span class="text-xs text-amber-300/70 mt-1">1 Ksatria Bermain Solo</span>
+                </button>
+                <button type="button" onclick="selectMode('dual')" id="mode-btn-dual" class="p-4 rounded-xl border-2 border-slate-700 bg-slate-900/40 hover:bg-amber-900/30 transition flex flex-col items-center">
+                    <i class="fa-solid fa-people-arrows text-3xl text-amber-400 mb-2"></i>
+                    <span class="font-bold text-amber-100">Mode Dual (PvP 2 Player)</span>
+                    <span class="text-xs text-amber-300/70 mt-1">2 Ksatria Bertanding Bergantian</span>
+                </button>
+            </div>
+
+            <!-- Form Nama Pemain -->
+            <div class="space-y-4 max-w-md mx-auto mb-6 text-left">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-amber-300 mb-1"><i class="fa-solid fa-user mr-1"></i> Nama Ksatria 1:</label>
+                    <input type="text" id="player1-name" placeholder="Masukkan nama ksatria..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-amber-500/50 text-amber-100 focus:outline-none focus:border-amber-400 font-semibold" value="Ksatria Al-Fateh">
+                </div>
+                <div id="player2-container" class="hidden">
+                    <label class="block text-xs uppercase font-bold text-amber-300 mb-1"><i class="fa-solid fa-user-ninja mr-1"></i> Nama Ksatria 2:</label>
+                    <input type="text" id="player2-name" placeholder="Masukkan nama lawan..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-amber-500/50 text-amber-100 focus:outline-none focus:border-amber-400 font-semibold" value="Ksatria Tariq">
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="gold-button text-amber-950 font-black font-cinzel px-8 py-4 rounded-xl text-lg w-full max-w-md tracking-wider">
+                <i class="fa-solid fa-horse mr-2"></i> MULAI EKSPEDISI
+            </button>
+        </section>
+
+        <!-- 2. HALAMAN PERMAINAN (SOAL & INTERAKSI) -->
+        <section id="screen-game" class="hidden space-y-4">
+            
+            <!-- Progress & Player Bar -->
+            <div class="card-arabic rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                <!-- Turn / Player Info -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-600/30 border border-amber-400 flex items-center justify-center text-amber-300">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <div id="current-player-display" class="font-bold text-amber-300">Pemain: -</div>
+                        <div id="score-display" class="text-xs text-amber-200/80">Skor: 0 Poin</div>
+                    </div>
+                </div>
+
+                <!-- Timer Indicator -->
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-clock text-amber-400 text-lg"></i>
+                    <div class="w-32 bg-slate-800 rounded-full h-3 border border-amber-500/30 overflow-hidden">
+                        <div id="timer-bar" class="bg-gradient-to-r from-amber-400 to-red-500 h-full w-full transition-all duration-1000"></div>
+                    </div>
+                    <span id="timer-text" class="text-sm font-bold text-amber-300 w-8">15s</span>
+                </div>
+
+                <!-- Question Counter -->
+                <div class="text-sm font-bold text-amber-400 bg-amber-950/60 px-3 py-1 rounded-lg border border-amber-500/30">
+                    Soal <span id="q-number">1</span> / 10
+                </div>
+            </div>
+
+            <!-- Furusiyya Progress Track (Visual Ksatria Melintasi Padang Pasir) -->
+            <div class="card-arabic rounded-xl p-3 relative overflow-hidden">
+                <div class="text-xs text-amber-300/80 mb-1 flex justify-between font-semibold">
+                    <span><i class="fa-solid fa-campground mr-1"></i> Perkemahan Awal</span>
+                    <span><i class="fa-solid fa-flag-checkered mr-1"></i> Istana Furusiyya</span>
+                </div>
+                <div class="w-full bg-slate-900 rounded-lg h-8 relative flex items-center px-2 border border-amber-900">
+                    <!-- Dune Track Background Lines -->
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    <!-- Knight Marker -->
+                    <div id="knight-marker" class="absolute transition-all duration-500 text-amber-400 text-xl flex items-center gap-1" style="left: 0%;">
+                        <i class="fa-solid fa-horse-head"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="card-arabic rounded-2xl p-6 md:p-8 relative">
+                <div class="mb-4 inline-block px-3 py-1 rounded bg-amber-900/50 border border-amber-500/40 text-xs text-amber-300 font-bold" id="q-category">
+                    Asmaul Husna
+                </div>
+                <h3 id="q-text" class="text-lg md:text-2xl font-bold text-amber-100 mb-6 leading-relaxed">
+                    Pertanyaan akan muncul di sini...
+                </h3>
+
+                <!-- Options Grid -->
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Options populated via JS -->
+                </div>
+
+                <!-- Explanation / Feedback Alert (Hidden by default) -->
+                <div id="feedback-box" class="hidden mt-6 p-4 rounded-xl border text-sm flex items-start gap-3">
+                    <i id="feedback-icon" class="text-2xl mt-1"></i>
+                    <div>
+                        <div id="feedback-title" class="font-bold text-base mb-1"></div>
+                        <div id="feedback-text" class="text-amber-100/90"></div>
+                    </div>
+                </div>
+
+                <!-- Next Button -->
+                <div class="mt-6 flex justify-end">
+                    <button id="btn-next" onclick="nextQuestion()" class="hidden gold-button text-amber-950 font-bold font-cinzel px-6 py-3 rounded-xl flex items-center gap-2">
+                        <span>Lanjutkan Perjalanan</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. HALAMAN HASIL / AKHIR PERMAINAN -->
+        <section id="screen-result" class="hidden card-arabic rounded-2xl p-6 md:p-8 text-center space-y-6">
+            <div class="w-20 h-20 mx-auto rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-amber-400 text-4xl pulse-gold">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <div>
+                <h2 class="text-2xl md:text-3xl font-bold font-cinzel text-amber-300">Hasil Ekspedisi Furusiyya</h2>
+                <p class="text-amber-200/70 text-sm mt-1">Papan Skor Akhir Pertandingan</p>
+            </div>
+
+            <!-- Score Cards -->
+            <div id="final-score-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Gelar Ksatria Banner -->
+            <div class="p-4 rounded-xl bg-amber-950/60 border border-amber-500/50 max-w-xl mx-auto">
+                <div class="text-xs uppercase font-bold text-amber-400 mb-1">Gelar Kehormatan Furusiyya:</div>
+                <div id="knight-title-display" class="text-xl md:text-2xl font-black font-cinzel gold-gradient-text">
+                    -
+                </div>
+            </div>
+
+            <!-- Review Answers List -->
+            <div class="text-left max-w-2xl mx-auto">
+                <button onclick="toggleReview()" class="w-full py-2 text-amber-300 font-bold border-b border-amber-500/30 flex justify-between items-center text-sm">
+                    <span><i class="fa-solid fa-list-check mr-2"></i> Tinjauan Jawaban Soal</span>
+                    <i id="review-chevron" class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div id="review-container" class="hidden mt-4 space-y-3 max-h-60 overflow-y-auto pr-2">
+                    <!-- Review Items JS -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <button onclick="resetGame()" class="gold-button text-amber-950 font-bold font-cinzel px-6 py-3 rounded-xl flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Main Lagi
+                </button>
+                <button onclick="goHome()" class="px-6 py-3 rounded-xl bg-slate-800 border border-amber-500/40 text-amber-300 hover:bg-slate-700 font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-house"></i> Menu Utama
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER DECORATION -->
+    <footer class="relative z-10 text-center py-4 text-xs text-amber-300/50 border-t border-amber-900/40 mt-6 bg-slate-950/80">
+        <p>Desert Furusiyya &copy; Materi PAI Kelas 4 SD - Asmaul Husna (Al-Malik, Al-Aziz, Al-Quddus, As-Salam, Al-Mu'min)</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ==========================================
+           DATA SOAL PAI KELAS 4 ASMAUL HUSNA
+           ========================================== */
+        const quizData = [
+            {
+                category: "Al-Malik (Maharaja)",
+                question: "Al-Malik artinya Allah Maha Memiliki Kerajaan dan Maha Merajai. Contoh sikap meneladani Al-Malik dalam kehidupan sehari-hari adalah...",
+                options: [
+                    "Suka memerintah teman dengan semena-mena",
+                    "Menahan diri dari perbuatan yang merugikan diri dan orang lain",
+                    "Meminta perlindungan kepada dukun",
+                    "Memamerkan semua mainan yang dimiliki"
+                ],
+                correct: 1,
+                explanation: "Meneladani Al-Malik artinya mampu menguasai dan menahan diri dari hawa nafsu serta emosi yang merugikan."
+            },
+            {
+                category: "Al-Aziz (Mahamulia)",
+                question: "Allah Memiliki Kemuliaan yang Tidak Terkalahkan (Al-Aziz). Sebagai siswa kelas 4, bagaimana cara kita meneladani sifat Al-Aziz?",
+                options: [
+                    "Menjadi pribadi yang mandiri dan pantang menyerah",
+                    "Selalu bergantung pada bantuan orang lain",
+                    "Merasa paling hebat dibanding teman-teman",
+                    "Takut menghadapi ujian sekolah"
+                ],
+                correct: 0,
+                explanation: "Al-Aziz mengajarkan kita untuk mandiri, gigih, dan menjaga harga diri dengan perbuatan mulia."
+            },
+            {
+                category: "Al-Quddus (Mahasuci)",
+                question: "Allah Al-Quddus artinya Allah Mahasuci dari segala kekurangan. Bentuk pengalaman meneladani Al-Quddus adalah...",
+                options: [
+                    "Menjaga kebersihan hati, badan, pakaian, dan lingkungan",
+                    "Mandi hanya saat mau pergi jalan-jalan",
+                    "Membiarkan sampah berserakan di ruang kelas",
+                    "Mencuci tangan hanya ketika disuruh guru"
+                ],
+                correct: 0,
+                explanation: "Al-Quddus mendorong umat-Nya menyukai kesucian dan kebersihan lahir maupun batin."
+            },
+            {
+                category: "As-Salam (Mahasejahtera)",
+                question: "As-Salam berarti Allah Maha Memberi Keselamatan dan Kesejahteraan. Perilaku yang mencerminkan As-Salam yaitu...",
+                options: [
+                    "Suka memulai pertengkaran dengan teman",
+                    "Menciptakan kedamaian dan tidak menyebarkan berita bohong",
+                    "Mengganggu teman yang sedang belajar",
+                    "Acuh tak acuh ketika ada teman yang berselisih"
+                ],
+                correct: 1,
+                explanation: "Meneladani As-Salam dilakukan dengan menebarkan kedamaian, salam, dan menjaga kerukunan."
+            },
+            {
+                category: "Al-Mu'min (Mahamemberi Keamanan)",
+                question: "Bagaimana cara seorang ksatria muslim meneladani Asmaul Husna Al-Mu'min di sekolah?",
+                options: [
+                    "Menakut-nakuti teman dengan cerita hantu",
+                    "Menjaga ketertiban dan membuat teman merasa aman",
+                    "Menyembunyikan sepatu teman untuk iseng",
+                    "Mengunci teman di dalam kamar mandi"
+                ],
+                correct: 1,
+                explanation: "Al-Mu'min mengajarkan kita untuk memberi rasa aman dan kepercayaan kepada sesama."
+            },
+            {
+                category: "Al-Malik (Maharaja)",
+                question: "Siapakah pemilik hakiki seluruh alam semesta dan seisinya menurut Asmaul Husna Al-Malik?",
+                options: [
+                    "Para raja di bumi",
+                    "Presiden dan menteri",
+                    "Allah SWT",
+                    "Manusia kaya raya"
+                ],
+                correct: 2,
+                explanation: "Hanya Allah SWT satu-satunya Al-Malik (Maharaja) yang menguasai alam semesta secara mutlak."
+            },
+            {
+                category: "Al-Quddus (Mahasuci)",
+                question: "Menjaga kebersihan tempat ibadah seperti masjid/musholla merupakan bentuk pengamalan Asmaul Husna...",
+                options: [
+                    "Al-Aziz",
+                    "Al-Quddus",
+                    "Al-Mu'min",
+                    "Al-Malik"
+                ],
+                correct: 1,
+                explanation: "Al-Quddus memerintahkan kita untuk menyucikan fisik dan tempat-tempat ibadah."
+            },
+            {
+                category: "Al-Aziz (Mahamulia)",
+                question: "Ahmad selalu merapikan tempat tidurnya sendiri dan menyiapkan jadwal pelajaran tanpa disuruh orang tua. Ahmad meneladani sifat...",
+                options: [
+                    "Al-Aziz (Mandiri)",
+                    "Al-Malik",
+                    "As-Salam",
+                    "Al-Mu'min"
+                ],
+                correct: 0,
+                explanation: "Kemandirian dan keteguhan sikap merupakan cerminan dari meneladani Al-Aziz."
+            },
+            {
+                category: "As-Salam (Mahasejahtera)",
+                question: "Ketika mendengar ada perselisihan antara dua sahabatnya, Fatimah berupaya mendamaikan mereka. Sikap Fatimah meneladani...",
+                options: [
+                    "Al-Quddus",
+                    "Al-Aziz",
+                    "As-Salam",
+                    "Al-Malik"
+                ],
+                correct: 2,
+                explanation: "Mendamaikan orang yang berselisih adalah wujud meneladani As-Salam (Maha Memberi Kedamaian)."
+            },
+            {
+                category: "Al-Mu'min (Mahamemberi Keamanan)",
+                question: "Berikut ini yang BUKAN contoh perilaku meneladani Al-Mu'min adalah...",
+                options: [
+                    "Jujur dan dapat dipercaya",
+                    "Menjaga rahasia teman yang baik",
+                    "Suka menakut-nakuti adik hingga menangis",
+                    "Membantu menciptakan suasana kelas yang tenang"
+                ],
+                correct: 2,
+                explanation: "Menakut-nakuti orang lain bertentangan dengan sifat Al-Mu'min yang memberikan keamanan."
+            }
+        ];
+
+        /* ==========================================
+           GAME STATE & VARIABLES
+           ========================================== */
+        let gameMode = 'single'; // 'single' or 'dual'
+        let players = [
+            { name: '', score: 0, answers: [] },
+            { name: '', score: 0, answers: [] }
+        ];
+        let currentQuestionIndex = 0;
+        let activePlayerIndex = 0; // 0 for P1, 1 for P2 in Dual Mode
+        let timer = null;
+        let timeLeft = 15;
+        let soundEnabled = true;
+
+        /* ==========================================
+           WEB AUDIO API (SYNTHESIZED SOUND FX)
+           ========================================== */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSFX(type) {
+            if (!soundEnabled) return;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'correct') {
+                // High Sword Chime & Joy Tone
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.3); // C6
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'wrong') {
+                // Low War Drum / Fail Bump
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(60, now + 0.3);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'gallop') {
+                // Horse Gallop Simulation (Quick Low Taps)
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(120, now);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            }
+        }
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark';
+            }
+        }
+
+        /* ==========================================
+           SELECTION & START GAME LOGIC
+           ========================================== */
+        function selectMode(mode) {
+            gameMode = mode;
+            const btnSingle = document.getElementById('mode-btn-single');
+            const btnDual = document.getElementById('mode-btn-dual');
+            const p2Container = document.getElementById('player2-container');
+
+            if (mode === 'single') {
+                btnSingle.className = 'p-4 rounded-xl border-2 border-amber-500 bg-amber-950/40 hover:bg-amber-900/50 transition flex flex-col items-center';
+                btnDual.className = 'p-4 rounded-xl border-2 border-slate-700 bg-slate-900/40 hover:bg-amber-900/30 transition flex flex-col items-center';
+                p2Container.classList.add('hidden');
+            } else {
+                btnDual.className = 'p-4 rounded-xl border-2 border-amber-500 bg-amber-950/40 hover:bg-amber-900/50 transition flex flex-col items-center';
+                btnSingle.className = 'p-4 rounded-xl border-2 border-slate-700 bg-slate-900/40 hover:bg-amber-900/30 transition flex flex-col items-center';
+                p2Container.classList.remove('hidden');
+            }
+            playSFX('gallop');
+        }
+
+        function startGame() {
+            const name1 = document.getElementById('player1-name').value.trim() || 'Ksatria 1';
+            const name2 = document.getElementById('player2-name').value.trim() || 'Ksatria 2';
+
+            players[0] = { name: name1, score: 0, answers: [] };
+            players[1] = { name: name2, score: 0, answers: [] };
+
+            currentQuestionIndex = 0;
+            activePlayerIndex = 0;
+
+            document.getElementById('screen-main').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        /* ==========================================
+           QUIZ ENGINE & TIMERS
+           ========================================== */
+        function loadQuestion() {
+            clearInterval(timer);
+            const q = quizData[currentQuestionIndex];
+            const activePlayer = players[activePlayerIndex];
+
+            // Reset Feedback UI
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.classList.add('hidden');
+            document.getElementById('btn-next').classList.add('hidden');
+
+            // Update Progress Marker
+            const progressPercent = (currentQuestionIndex / quizData.length) * 90;
+            document.getElementById('knight-marker').style.left = `${progressPercent}%`;
+
+            // Display Info
+            document.getElementById('q-number').textContent = currentQuestionIndex + 1;
+            document.getElementById('q-category').textContent = q.category;
+            document.getElementById('q-text').textContent = q.question;
+
+            if (gameMode === 'dual') {
+                document.getElementById('current-player-display').innerHTML = `<i class="fa-solid fa-flag text-amber-400 mr-1"></i> Giliran: ${activePlayer.name}`;
+            } else {
+                document.getElementById('current-player-display').innerHTML = `<i class="fa-solid fa-user-shield text-amber-400 mr-1"></i> Ksatria: ${activePlayer.name}`;
+            }
+            document.getElementById('score-display').textContent = `Skor: ${activePlayer.score} Poin`;
+
+            // Populate Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            const optionLabels = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn text-left p-4 rounded-xl bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 hover:bg-amber-950/40 transition flex items-start gap-3 text-amber-100 font-semibold';
+                btn.onclick = () => selectAnswer(idx);
+                btn.innerHTML = `
+                    <span class="w-7 h-7 rounded-lg bg-amber-900/60 border border-amber-500/50 flex items-center justify-center text-xs font-bold text-amber-300 shrink-0 mt-0.5">${optionLabels[idx]}</span>
+                    <span>${opt}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            // Start Countdown Timer (15 seconds)
+            timeLeft = 15;
+            updateTimerUI();
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timeOutAnswer();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const timerBar = document.getElementById('timer-bar');
+            const timerText = document.getElementById('timer-text');
+            timerText.textContent = `${timeLeft}s`;
+            const percentage = (timeLeft / 15) * 100;
+            timerBar.style.width = `${percentage}%`;
+        }
+
+        function timeOutAnswer() {
+            selectAnswer(-1); // -1 indicates timeout
+        }
+
+        function selectAnswer(selectedIndex) {
+            clearInterval(timer);
+            const q = quizData[currentQuestionIndex];
+            const activePlayer = players[activePlayerIndex];
+            const isCorrect = (selectedIndex === q.correct);
+
+            // Disable all option buttons
+            const buttons = document.querySelectorAll('.opt-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            // Highlighting Correct & Wrong options
+            if (selectedIndex !== -1) {
+                buttons[selectedIndex].classList.remove('bg-slate-900/90', 'border-amber-500/30');
+                if (isCorrect) {
+                    buttons[selectedIndex].classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+                } else {
+                    buttons[selectedIndex].classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                }
+            }
+
+            // Always highlight actual correct answer
+            if (selectedIndex !== q.correct) {
+                buttons[q.correct].classList.remove('bg-slate-900/90', 'border-amber-500/30');
+                buttons[q.correct].classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+            }
+
+            // Record Score & History
+            if (isCorrect) {
+                activePlayer.score += 10;
+                playSFX('correct');
+            } else {
+                playSFX('wrong');
+            }
+
+            activePlayer.answers.push({
+                qIndex: currentQuestionIndex,
+                selected: selectedIndex,
+                isCorrect: isCorrect
+            });
+
+            // Feedback Box Display
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+
+            feedbackBox.classList.remove('hidden', 'bg-emerald-950/50', 'border-emerald-500/50', 'bg-rose-950/50', 'border-rose-500/50');
+
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-emerald-950/50', 'border-emerald-500/50');
+                feedbackIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-2xl';
+                feedbackTitle.className = 'font-bold text-base mb-1 text-emerald-300';
+                feedbackTitle.textContent = 'Jawaban Tepat! Sword Strike Hits!';
+            } else {
+                feedbackBox.classList.add('bg-rose-950/50', 'border-rose-500/50');
+                feedbackIcon.className = 'fa-solid fa-circle-xmark text-rose-400 text-2xl';
+                feedbackTitle.className = 'font-bold text-base mb-1 text-rose-300';
+                feedbackTitle.textContent = selectedIndex === -1 ? 'Waktu Habis!' : 'Jawaban Kurang Tepat!';
+            }
+            feedbackText.textContent = q.explanation;
+
+            document.getElementById('btn-next').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            playSFX('gallop');
+            if (gameMode === 'dual') {
+                // Switch turn in dual mode
+                if (activePlayerIndex === 0) {
+                    activePlayerIndex = 1;
+                    loadQuestion(); // Same question for Player 2
+                } else {
+                    activePlayerIndex = 0;
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < quizData.length) {
+                        loadQuestion();
+                    } else {
+                        showResults();
+                    }
+                }
+            } else {
+                // Single Player Mode
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }
+        }
+
+        /* ==========================================
+           RESULTS & REVIEW LOGIC
+           ========================================== */
+        function showResults() {
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+
+            const scoreContainer = document.getElementById('final-score-cards');
+            scoreContainer.innerHTML = '';
+
+            // Generate Score Cards
+            if (gameMode === 'single') {
+                const p1 = players[0];
+                scoreContainer.className = "max-w-md mx-auto w-full";
+                scoreContainer.innerHTML = `
+                    <div class="p-4 rounded-xl bg-amber-950/40 border border-amber-500/40 text-center">
+                        <div class="text-sm font-bold text-amber-300">${p1.name}</div>
+                        <div class="text-4xl font-black font-cinzel text-amber-400 my-2">${p1.score} <span class="text-base font-normal text-amber-200">/ 100</span></div>
+                        <div class="text-xs text-amber-300/80">Total Nilai Ekspedisi</div>
+                    </div>
+                `;
+                assignKnightTitle(p1.score);
+            } else {
+                const p1 = players[0];
+                const p2 = players[1];
+                scoreContainer.className = "grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto w-full";
+
+                let winnerText = p1.score > p2.score ? `${p1.name} Menang!` : (p2.score > p1.score ? `${p2.name} Menang!` : "Hasil Imbang!");
+
+                scoreContainer.innerHTML = `
+                    <div class="p-4 rounded-xl ${p1.score >= p2.score ? 'bg-amber-950/60 border-2 border-amber-400' : 'bg-slate-900/50 border border-slate-700'} text-center">
+                        <div class="text-sm font-bold text-amber-300">${p1.name}</div>
+                        <div class="text-3xl font-black font-cinzel text-amber-400 my-1">${p1.score} Poin</div>
+                    </div>
+                    <div class="p-4 rounded-xl ${p2.score >= p1.score ? 'bg-amber-950/60 border-2 border-amber-400' : 'bg-slate-900/50 border border-slate-700'} text-center">
+                        <div class="text-sm font-bold text-amber-300">${p2.name}</div>
+                        <div class="text-3xl font-black font-cinzel text-amber-400 my-1">${p2.score} Poin</div>
+                    </div>
+                `;
+                document.getElementById('knight-title-display').textContent = winnerText;
+            }
+
+            // Generate Review List (Player 1 or Single)
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = '';
+
+            quizData.forEach((q, idx) => {
+                const p1Ans = players[0].answers.find(a => a.qIndex === idx);
+                const isCorrect = p1Ans ? p1Ans.isCorrect : false;
+
+                const item = document.createElement('div');
+                item.className = `p-3 rounded-lg border text-xs ${isCorrect ? 'bg-emerald-950/30 border-emerald-500/40' : 'bg-rose-950/30 border-rose-500/40'}`;
+                item.innerHTML = `
+                    <div class="font-bold text-amber-200 mb-1">${idx + 1}. ${q.question}</div>
+                    <div class="text-amber-300/80">Kunci Jawaban: <span class="font-bold text-amber-200">${q.options[q.correct]}</span></div>
+                `;
+                reviewContainer.appendChild(item);
+            });
+        }
+
+        function assignKnightTitle(score) {
+            const titleDisplay = document.getElementById('knight-title-display');
+            if (score === 100) {
+                titleDisplay.textContent = 'Faris As-Salam (Ksatria Utama Kedamaian)';
+            } else if (score >= 80) {
+                titleDisplay.textContent = 'Ksatria Al-Aziz (Pahlawan Mandiri & Mulia)';
+            } else if (score >= 60) {
+                titleDisplay.textContent = 'Penunggang Kuda Al-Quddus (Penyuka Kesucian)';
+            } else if (score >= 40) {
+                titleDisplay.textContent = 'Pengawal Al-Mu\'min (Pemberi Keamanan)';
+            } else {
+                titleDisplay.textContent = 'Ksatria Pemula Padang Pasir';
+            }
+        }
+
+        function toggleReview() {
+            const rev = document.getElementById('review-container');
+            const icon = document.getElementById('review-chevron');
+            if (rev.classList.contains('hidden')) {
+                rev.classList.remove('hidden');
+                icon.className = 'fa-solid fa-chevron-up';
+            } else {
+                rev.classList.add('hidden');
+                icon.className = 'fa-solid fa-chevron-down';
+            }
+        }
+
+        function resetGame() {
+            startGame();
+        }
+
+        function goHome() {
+            document.getElementById('screen-result').classList.add('hidden');
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-main').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
